@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const BASE = "https://visiting-card-digitization-and-voice.onrender.com";
 
 async function handle(res) {
   if (!res.ok) {
