@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     # get written into Google Sheets). e.g. https://my-backend.run.app
     public_base_url: str = "http://localhost:8000"
     # Comma-separated list of allowed CORS origins for the React frontend.
-    cors_origins: str = "http://localhost:5173,http://localhost:3000"
+   cors_origins: str = "https://visiting-card-digitization-and-voic-orpin.vercel.app,http://localhost:5173,http://localhost:3000"
     media_dir: str = "media"
 
     # ---- Anthropic (Vision extraction + agent reasoning) ----
