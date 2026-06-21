@@ -1,0 +1,43 @@
+# Local one-command stack: MongoDB + FastAPI backend + React frontend.
+# Secrets come from backend/.env (never committed). See README.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file:
+      # Paste your keys into the project-root .env (this file).
+      - ./.env
+    environment:
+      # Override so the backend talks to the compose mongo service.
+      MONGODB_URI: mongodb://mongo:27017
+      PUBLIC_BASE_URL: http://localhost:8000
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_data:/app/media
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:8000
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo_data:
+  media_data:

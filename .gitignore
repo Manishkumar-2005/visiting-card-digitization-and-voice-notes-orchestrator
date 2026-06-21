@@ -1,0 +1,25 @@
+# Secrets — NEVER commit
+.env
+.env.local
+**/.env
+**/.env.local
+service-account*.json
+*credentials*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+backend/media/
+
+# Node
+node_modules/
+dist/
+frontend/.vite/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
