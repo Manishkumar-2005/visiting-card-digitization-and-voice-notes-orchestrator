@@ -13,6 +13,7 @@ multiple concurrent chat sessions.
 from __future__ import annotations
 
 import logging
+import os
 
 from langchain_groq import ChatGroq
 from langchain_core.messages import SystemMessage
@@ -34,8 +35,9 @@ def _build_llm() -> ChatGroq:
     settings = get_settings()
     if not settings.groq_api_key:
         raise RuntimeError("GROQ_API_KEY is not set — the agent cannot run.")
+    model_name = os.getenv("GROQ_MODEL", settings.groq_model or "llama-3.1-8b-instant")
     return ChatGroq(
-        model=settings.groq_model,
+        model=model_name,
         api_key=settings.groq_api_key,
         max_tokens=2048,
         timeout=60,

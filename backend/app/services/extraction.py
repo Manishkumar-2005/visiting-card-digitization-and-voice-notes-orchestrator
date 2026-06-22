@@ -7,6 +7,7 @@ model config is reused by the agent.
 from __future__ import annotations
 
 import base64
+import os
 from typing import Optional
 
 from langchain_groq import ChatGroq
@@ -30,6 +31,8 @@ def _client(model_name: str) -> ChatGroq:
         raise RuntimeError(
             "GROQ_API_KEY is not set — cannot run Groq model."
         )
+    if model_name == settings.groq_model:
+        model_name = os.getenv("GROQ_MODEL", settings.groq_model or "llama-3.1-8b-instant")
     return ChatGroq(
         model=model_name,
         api_key=settings.groq_api_key,

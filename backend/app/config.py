@@ -21,13 +21,13 @@ class Settings(BaseSettings):
     # get written into Google Sheets). e.g. https://my-backend.run.app
     public_base_url: str = "http://localhost:8000"
     # Comma-separated list of allowed CORS origins for the React frontend.
-    cors_origins: str = "https://visiting-card-digitization-and-voic-orpin.vercel.app,http://localhost:5173,http://localhost:3000"
+    cors_origins: str = "https://visiting-card-digitization-frontend.onrender.com,https://visiting-card-digitization-and-voic-orpin.vercel.app,http://localhost:5173,http://localhost:3000"
     media_dir: str = "media"
 
     # ---- Groq (Vision extraction + agent reasoning) ----
     groq_api_key: Optional[str] = None
-    groq_model: str = "llama-3.3-70b-versatile"
-    groq_vision_model: str = "llama-3.2-11b-vision-preview"
+    groq_model: str = "llama-3.1-8b-instant"
+    groq_vision_model: str = "llama-3.2-11b-vision-instruct"
 
     # ---- MongoDB (chat sessions, message history, agent checkpoints) ----
     mongodb_uri: str = "mongodb://localhost:27017"
