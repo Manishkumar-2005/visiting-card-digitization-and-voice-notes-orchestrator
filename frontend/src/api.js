@@ -1,4 +1,4 @@
-const BASE = "https://visiting-card-digitization-and-voice.onrender.com";
+const BASE = "https://card-digitization-backend.onrender.com";
 
 async function handle(res) {
   if (!res.ok) {
