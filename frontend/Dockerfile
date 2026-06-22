@@ -5,7 +5,7 @@ COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
 # Bake the backend URL at build time (Vite inlines VITE_* vars).
-ARG VITE_API_BASE_URL=https://visiting-card-digitization-and-voice.onrender.com
+ARG VITE_API_BASE_URL=https://visiting-card-backend-bqzz.onrender.com
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
