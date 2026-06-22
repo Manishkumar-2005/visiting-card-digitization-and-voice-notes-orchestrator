@@ -31,7 +31,9 @@ def _client(model_name: str) -> ChatGroq:
         raise RuntimeError(
             "GROQ_API_KEY is not set — cannot run Groq model."
         )
-    if model_name == settings.groq_model:
+    if model_name == settings.groq_vision_model:
+        model_name = os.getenv("GROQ_VISION_MODEL", settings.groq_vision_model or "llama-3.2-11b-vision-preview")
+    elif model_name == settings.groq_model:
         model_name = os.getenv("GROQ_MODEL", settings.groq_model or "llama-3.1-8b-instant")
     return ChatGroq(
         model=model_name,
