@@ -24,10 +24,10 @@ class Settings(BaseSettings):
     cors_origins: str = "https://visiting-card-digitization-and-voic-orpin.vercel.app,http://localhost:5173,http://localhost:3000"
     media_dir: str = "media"
 
-    # ---- Anthropic (Vision extraction + agent reasoning) ----
-    anthropic_api_key: Optional[str] = None
-    # Override if your key doesn't have access to the default model.
-    anthropic_model: str = "claude-opus-4-8"
+    # ---- Groq (Vision extraction + agent reasoning) ----
+    groq_api_key: Optional[str] = None
+    groq_model: str = "llama-3.3-70b-versatile"
+    groq_vision_model: str = "llama-3.2-11b-vision-preview"
 
     # ---- MongoDB (chat sessions, message history, agent checkpoints) ----
     mongodb_uri: str = "mongodb://localhost:27017"

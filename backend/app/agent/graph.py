@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import logging
 
-from langchain_anthropic import ChatAnthropic
+from langchain_groq import ChatGroq
 from langchain_core.messages import SystemMessage
 from langgraph.graph import END, START, StateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -30,13 +30,13 @@ logger = logging.getLogger(__name__)
 _graph = None
 
 
-def _build_llm() -> ChatAnthropic:
+def _build_llm() -> ChatGroq:
     settings = get_settings()
-    if not settings.anthropic_api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not set — the agent cannot run.")
-    return ChatAnthropic(
-        model=settings.anthropic_model,
-        api_key=settings.anthropic_api_key,
+    if not settings.groq_api_key:
+        raise RuntimeError("GROQ_API_KEY is not set — the agent cannot run.")
+    return ChatGroq(
+        model=settings.groq_model,
+        api_key=settings.groq_api_key,
         max_tokens=2048,
         timeout=60,
     )

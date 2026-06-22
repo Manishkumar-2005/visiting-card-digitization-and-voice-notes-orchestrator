@@ -9,7 +9,7 @@ from __future__ import annotations
 import base64
 from typing import Optional
 
-from langchain_anthropic import ChatAnthropic
+from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage
 
 from app.config import get_settings
@@ -24,34 +24,33 @@ _EXTRACTION_INSTRUCTION = (
 )
 
 
-def _client() -> ChatAnthropic:
+def _client(model_name: str) -> ChatGroq:
     settings = get_settings()
-    if not settings.anthropic_api_key:
+    if not settings.groq_api_key:
         raise RuntimeError(
-            "ANTHROPIC_API_KEY is not set — cannot run vision extraction."
+            "GROQ_API_KEY is not set — cannot run Groq model."
         )
-    return ChatAnthropic(
-        model=settings.anthropic_model,
-        api_key=settings.anthropic_api_key,
-        max_tokens=1024,
+    return ChatGroq(
+        model=model_name,
+        api_key=settings.groq_api_key,
+        max_tokens=1024 if "vision" in model_name else 2048,
         timeout=60,
     )
 
 
 def extract_contact_from_image(image_bytes: bytes, media_type: str) -> ContactDetails:
-    """Run Claude vision over the card image and return structured fields."""
+    """Run Llama vision over the card image and return structured fields."""
+    settings = get_settings()
     b64 = base64.standard_b64encode(image_bytes).decode("utf-8")
-    llm = _client().with_structured_output(ContactDetails)
+    llm = _client(settings.groq_vision_model).with_structured_output(ContactDetails)
     message = HumanMessage(
         content=[
             {"type": "text", "text": _EXTRACTION_INSTRUCTION},
             {
-                "type": "image",
-                "source": {
-                    "type": "base64",
-                    "media_type": media_type,
-                    "data": b64,
-                },
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:{media_type};base64,{b64}"
+                }
             },
         ]
     )
@@ -74,7 +73,8 @@ def enrich_company(contact: ContactDetails) -> ContactDetails:
     if contact.website and contact.linkedin:
         return contact
 
-    llm = _client()
+    settings = get_settings()
+    llm = _client(settings.groq_model)
     prompt = (
         "Given the company name below, suggest the single most likely official "
         "website URL and the most likely LinkedIn company page URL. If you are "
