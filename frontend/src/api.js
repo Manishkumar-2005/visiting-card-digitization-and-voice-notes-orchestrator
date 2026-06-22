@@ -1,7 +1,5 @@
-HEAD
-const BASE = import.meta.env.VITE_API_BASE_URL || "https://card-digitization-backend.onrender.com";
-const BASE = "https://visiting-card-backend-bqzz.onrender.com";
-6bbb3ae39d74060867e72c3b457b7c222877ce16
+const BASE = import.meta.env.VITE_API_BASE_URL || "https://visiting-card-backend-new.onrender.com";
+
 
 async function handle(res) {
   if (!res.ok) {
