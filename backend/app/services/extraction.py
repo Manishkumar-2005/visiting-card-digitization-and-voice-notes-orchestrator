@@ -35,6 +35,14 @@ def _client(model_name: str) -> ChatGroq:
         model_name = os.getenv("GROQ_VISION_MODEL", settings.groq_vision_model or "llama-3.2-11b-vision-preview")
     elif model_name == settings.groq_model:
         model_name = os.getenv("GROQ_MODEL", settings.groq_model or "llama-3.1-8b-instant")
+
+    # Clean up model name if it contains assignment typos like "vision_model = llama-..."
+    if model_name and "llama" in model_name:
+        import re
+        match = re.search(r"llama-[a-zA-Z0-9\.\-]+", model_name)
+        if match:
+            model_name = match.group(0)
+
     return ChatGroq(
         model=model_name,
         api_key=settings.groq_api_key,
