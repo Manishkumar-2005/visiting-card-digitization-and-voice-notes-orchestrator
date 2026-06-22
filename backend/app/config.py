@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # ---- Groq (Vision extraction + agent reasoning) ----
     groq_api_key: Optional[str] = None
     groq_model: str = "llama-3.1-8b-instant"
-    groq_vision_model: str = "llama-3.2-11b-vision-instruct"
+    groq_vision_model: str = "llama-3.2-11b-vision-preview"
 
     # ---- MongoDB (chat sessions, message history, agent checkpoints) ----
     mongodb_uri: str = "mongodb://localhost:27017"
